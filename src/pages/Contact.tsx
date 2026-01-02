@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
+import emailjs from "@emailjs/browser";
 
 const contactInfo = [
   {
@@ -46,16 +47,40 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const res = await emailjs.send(
+        "service_9mfj0wh",
+        "template_x55fngd",
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          email: formData.email,
+          subject: formData.subject,
+        },
+        "p8_PbtWdqqOUxMKUE"
+      );
 
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
+      console.log("res-----", res);
 
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    setIsSubmitting(false);
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      setFormData({ name: "", email: "", phone: "", message: "", subject: "" });
+    } catch (error) {
+      console.log("error----", error);
+
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -81,20 +106,29 @@ const Contact = () => {
                   Let&apos;s Talk
                 </h2>
                 <p className="text-muted-foreground">
-                  Have a question or want to discuss a partnership? We&apos;d love to hear from you.
+                  Have a question or want to discuss a partnership? We&apos;d
+                  love to hear from you.
                 </p>
               </div>
 
               <div className="space-y-4">
                 {contactInfo.map((item) => (
-                  <div key={item.title} className="glass-card p-4 rounded-xl flex items-start gap-4">
+                  <div
+                    key={item.title}
+                    className="glass-card p-4 rounded-xl flex items-start gap-4"
+                  >
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground">{item.title}</h3>
+                      <h3 className="font-semibold text-foreground">
+                        {item.title}
+                      </h3>
                       {item.details.map((detail, index) => (
-                        <p key={index} className="text-muted-foreground text-sm">
+                        <p
+                          key={index}
+                          className="text-muted-foreground text-sm"
+                        >
                           {detail}
                         </p>
                       ))}
@@ -111,26 +145,39 @@ const Contact = () => {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <form onSubmit={handleSubmit} className="glass-card p-8 rounded-2xl space-y-6">
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Send a Message</h3>
-                
+              <form
+                onSubmit={handleSubmit}
+                className="glass-card p-8 rounded-2xl space-y-6"
+              >
+                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">
+                  Send a Message
+                </h3>
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Your Name *</label>
+                    <label className="text-sm font-medium text-foreground">
+                      Your Name *
+                    </label>
                     <Input
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                       placeholder="John Doe"
                       required
                       className="bg-secondary/50 border-border"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Email Address *</label>
+                    <label className="text-sm font-medium text-foreground">
+                      Email Address *
+                    </label>
                     <Input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       placeholder="john@example.com"
                       required
                       className="bg-secondary/50 border-border"
@@ -140,19 +187,27 @@ const Contact = () => {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Phone Number</label>
+                    <label className="text-sm font-medium text-foreground">
+                      Phone Number
+                    </label>
                     <Input
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
                       placeholder="+92 300 123 4567"
                       className="bg-secondary/50 border-border"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Subject *</label>
+                    <label className="text-sm font-medium text-foreground">
+                      Subject *
+                    </label>
                     <Input
                       value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, subject: e.target.value })
+                      }
                       placeholder="How can we help?"
                       required
                       className="bg-secondary/50 border-border"
@@ -161,10 +216,14 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Message *</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Message *
+                  </label>
                   <Textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     placeholder="Tell us more about your inquiry..."
                     rows={5}
                     required
@@ -197,7 +256,9 @@ const Contact = () => {
           <div className="rounded-2xl overflow-hidden h-[400px] bg-secondary flex items-center justify-center">
             <div className="text-center">
               <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Hafizabad, Punjab, Pakistan</p>
+              <p className="text-muted-foreground">
+                Hafizabad, Punjab, Pakistan
+              </p>
             </div>
           </div>
         </div>
