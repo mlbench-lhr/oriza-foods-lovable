@@ -18,7 +18,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    details: ["+92 300 123 4567", "+92 321 987 6543"],
+    details: ["+92 335 530 0400", "+92 321 987 6543"],
   },
   {
     icon: Mail,
@@ -195,7 +195,7 @@ const Contact = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
                       }
-                      placeholder="+92 300 123 4567"
+                      placeholder="+92 335 530 0400"
                       className="bg-secondary/50 border-border"
                     />
                   </div>
