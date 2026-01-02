@@ -253,13 +253,13 @@ const Contact = () => {
       {/* Map placeholder */}
       <section className="pb-20">
         <div className="container-custom">
-          <div className="rounded-2xl overflow-hidden h-[400px] bg-secondary flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">
-                Hafizabad, Punjab, Pakistan
-              </p>
-            </div>
+          <div className="rounded-2xl overflow-hidden h-[400px]">
+            <iframe
+              className="w-full h-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Hafizabad,Punjab,Pakistan&output=embed"
+            />
           </div>
         </div>
       </section>
