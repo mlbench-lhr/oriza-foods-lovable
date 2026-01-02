@@ -24,12 +24,7 @@ const Header = () => {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-serif font-bold text-xl">O</span>
-            </div>
-            <span className="font-serif text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-              Oriza Foods
-            </span>
+            <img src="/logo.png" alt="" className="h-[40px]" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -51,7 +46,11 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button asChild variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button
+              asChild
+              variant="default"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
               <Link to="/contact">Get A Quote</Link>
             </Button>
           </div>
@@ -92,8 +91,14 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <Button asChild variant="default" className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/contact" onClick={() => setIsOpen(false)}>Get A Quote</Link>
+              <Button
+                asChild
+                variant="default"
+                className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                <Link to="/contact" onClick={() => setIsOpen(false)}>
+                  Get A Quote
+                </Link>
               </Button>
             </div>
           </motion.div>
